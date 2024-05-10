@@ -1,0 +1,212 @@
+#include <stdio.h>
+#include<stdlib.h>
+typedef struct nodetype{
+    int info;
+    struct nodetype *next;
+}node;
+node *head;
+void insert_beg(node **head,int val){
+    node *temp=(node*)malloc(sizeof(node));
+    temp->info=val;
+    if(head==NULL)
+        temp->next=NULL;
+    else
+        temp->next=*head;
+    *head=temp;
+}
+void insert_end(node **head,int val){
+    node *temp=(node*)malloc(sizeof(node));
+    temp->info=val;
+    temp->next=NULL;
+    if(head==NULL)
+        *head=temp;
+    else{
+        node *loc=*head;
+        while(loc->next!=NULL){
+            loc=loc->next;
+        }
+    loc->next=temp;
+    }
+    
+}
+void traversal(node *head){
+  while(head!=NULL){
+    printf("%d",head->info);
+    head=head->next;
+  }
+}
+// struct createnode(int val){
+//   struct node *ptr;
+//   struct node *next;
+
+//   ptr=(node*)malloc(sizeof(node));
+//   ptr->info=val;
+//   ptr->next=NULL;
+//   return ptr;
+
+
+int main() {
+    int val;
+    // printf("enter the value of the node");
+    // scanf("%d",&val);
+    // createnode(val);
+    insert_beg(&head,10);
+    insert_beg(&head,20);
+    insert_beg(&head,30);
+    insert_end(&head,40);
+    traversal(head);
+    
+
+    return 0;
+}
+
+
+//stack implementation using array
+#include <stdio.h>
+#define size 10
+
+void push(int stack[], int item, int *top) {
+    if (*top == size - 1) {
+        printf("overflow\n");
+        return;
+    }
+    (*top)++;
+    stack[*top] = item;
+    printf("item inserted\n");
+}
+
+int pop(int stack[], int *top) {
+    int item;
+
+    if (*top == -1) {
+        printf("underflow\n");
+        return -1;
+    }
+    item = stack[*top];
+    *top--;
+    return item;
+}
+
+int main() {
+    int stack[size];
+    int choice, item;
+    int top = -1;
+
+    while (1) {
+        printf("enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                if (top == size - 1) {
+                    printf("overflow\n");
+                    break;
+                }
+                printf("enter the item: ");
+                scanf("%d", &item);
+                push(stack, item, &top);
+                break;
+            case 2:
+                item = pop(stack, &top);
+                if (item != -1) {
+                    printf("popped item: %d\n", item);
+                }
+                break;
+            default:
+                printf("invalid choice\n");
+                break;
+        }
+    }
+
+    return 0;
+}
+
+//Stack implementation using linked list
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+    int data;
+    struct node* next;
+};
+
+
+struct node* Push(int info,struct node** head);
+int Pop(struct node** head);
+
+int main(){
+
+    int choice,item,PopItem;
+    struct node* head=NULL;
+    while (1) {
+        printf("enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+            printf("Enter the item to be inserted:");
+            scanf("%d",&item);
+            Push(item,&head);
+
+                
+                break;
+            case 2:
+                PopItem=Pop(&head);
+                printf("Item Deleted is %d\n",PopItem);
+                break;
+            default:
+                printf("invalid choice\n");
+                break;
+        }
+    }
+
+
+
+
+
+    return 0;
+}
+
+
+
+struct node* Push(int info,struct node** head){
+    struct node* ptr;
+    ptr=(struct node*)malloc(sizeof(struct node*));
+    ptr->data=info;
+    ptr->next=NULL;
+    if(*head==NULL){
+        *head=ptr;
+    }
+    else{
+
+        ptr->next=*head;
+        *head=ptr;
+
+
+    }
+
+    return *head;
+}
+
+
+
+int Pop(struct node** head){
+    struct node* loc;
+    int item;
+    if(*head==NULL){
+        exit(0);
+    }
+
+
+    else{
+        loc=*head;
+        item=loc->data;
+        *head=loc->next;
+        free(loc);
+
+
+        
+    }
+
+    return item;
+}
